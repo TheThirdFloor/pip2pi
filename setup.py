@@ -9,6 +9,9 @@ os.chdir(os.path.dirname(sys.argv[0]) or ".")
 
 try:
     long_description = open("README.rst", "U").read()
+except ValueError:
+    # 'U' removed as of Python 3.11
+    long_description = open("README.rst", "r").read()
 except IOError:
     long_description = "See https://github.com/wolever/pip2pi"
 
