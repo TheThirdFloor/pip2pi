@@ -379,6 +379,7 @@ def _dir2pi(option, argv):
             try_symlink(option, symlink_source, symlink_target)
         else:
             skip_fast = False
+            print(f"Exists? {os.path.exists(symlink_target)}: {symlink_target}")
             if option.fastcopy and os.path.exists(symlink_target):
                 skip_fast = True
                 message = "Skipped copying"
