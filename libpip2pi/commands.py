@@ -350,6 +350,9 @@ def _dir2pi(option, argv):
                  "<meta name='api-version' value='2' /></head><body>\n")
 
     processed_pkg = set()
+    if option.fastcopy:
+        print("FastCopy - Skipping existing files")
+    print(option)
     for file in os.listdir(pkgdir):
         pkg_filepath = os.path.join(pkgdir, file)
         if not os.path.isfile(pkg_filepath):
