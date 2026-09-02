@@ -247,6 +247,9 @@ class Pip2PiOptionParser(optparse.OptionParser):
             '-S', '--no-symlink', dest="use_symlink", action="store_false")
         self.add_option(
             '-v', '--verbose', dest="verbose", action="store_true")
+        self.add_option(
+            '-F', '--fastcopy', dest="fastcopy", action="store_true"
+        )
 
     def _process_args(self, largs, rargs, values):
         """
@@ -374,7 +377,8 @@ def _dir2pi(option, argv):
         else:
             if option.verbose:
                 print('copying %s to %s' % (symlink_target, pkg_filepath))
-            shutil.copy2(pkg_filepath, symlink_target)
+            if not option.fastcopy or not os.path.exists(symlink_target):
+                shutil.copy2(pkg_filepath, symlink_target)
 
         if pkg_name not in processed_pkg:
             pkg_index += "<a href='%s/'>%s</a><br />\n" %(
