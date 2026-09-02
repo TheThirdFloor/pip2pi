@@ -248,7 +248,8 @@ class Pip2PiOptionParser(optparse.OptionParser):
         self.add_option(
             '-v', '--verbose', dest="verbose", action="store_true")
         self.add_option(
-            '-F', '--fastcopy', dest="fastcopy", action="store_true"
+            '-F', '--fastcopy', dest="fastcopy", action="store_true",
+            help=("Does not copy files that already exist in the destination.")
         )
 
     def _process_args(self, largs, rargs, values):
