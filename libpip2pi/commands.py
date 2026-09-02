@@ -351,8 +351,7 @@ def _dir2pi(option, argv):
 
     processed_pkg = set()
     if option.fastcopy:
-        print("FastCopy - Skipping existing files")
-    print(option)
+        print("FastCopy - Skipping existing files\n")
     for file in os.listdir(pkgdir):
         pkg_filepath = os.path.join(pkgdir, file)
         if not os.path.isfile(pkg_filepath):
@@ -379,9 +378,15 @@ def _dir2pi(option, argv):
         if option.use_symlink:
             try_symlink(option, symlink_source, symlink_target)
         else:
+            skip_fast = False
+            if option.fastcopy and os.path.exists(symlink_target):
+                skip_fast = True
+                message = "Skipped copying"
+            else:
+                message = "Copying"
             if option.verbose:
-                print('copying %s to %s' % (symlink_target, pkg_filepath))
-            if not option.fastcopy or not os.path.exists(symlink_target):
+                print(f'{message} %s to %s' % (symlink_target, pkg_filepath))
+            if not skip_fast:
                 shutil.copy2(pkg_filepath, symlink_target)
 
         if pkg_name not in processed_pkg:
